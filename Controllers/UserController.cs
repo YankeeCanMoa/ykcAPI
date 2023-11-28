@@ -24,7 +24,7 @@ namespace ykcAPI.Controllers
         /// </returns>
         [HttpPost("GetProfiles")]
         [ProducesResponseType(typeof(CusTomResponse<List<UserID>>), 200)]
-        public IActionResult GetProfiles([FromBody] UserInfoList userInfoList)
+        public IActionResult Post([FromBody] UserInfoList userInfoList)
         {
             try
             {
@@ -64,5 +64,39 @@ namespace ykcAPI.Controllers
                 return StatusCode(500, errorResponse);
             }
         }
+
+        [HttpGet]
+        public IActionResult Get([FromQuery] string parameter)
+        {
+            // GET 요청 처리 로직
+            return Ok($"Received GET request with parameter: {parameter}");
+        }
+
+        [HttpPut]
+        public IActionResult Put([FromBody] PutDataModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Invalid data format.");
+            }
+
+            // PUT 요청 처리 로직
+            return Ok($"Received PUT data: {model.Data}");
+        }
+
+        [HttpDelete("api/items/{id}")]
+        public IActionResult DeleteItem(int id)
+        {
+            // ID를 사용하여 아이템 삭제 로직
+            // ...
+
+            return Ok($"Deleted item with ID: {id}");
+        }
     }
+
+    public class PutDataModel
+    {
+        public string Data { get; set; }
+    }
+
 }
