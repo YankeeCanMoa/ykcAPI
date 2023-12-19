@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,9 @@ namespace ykcAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+	[Authorize("ApiKey")]
+
+	public class UserController : ControllerBase
     {
         /// <summary>
         /// 유저정보들을 입력받으면 User ID를 생성하여 Return함
@@ -23,7 +26,7 @@ namespace ykcAPI.Controllers
         /// <returns>
         /// </returns>
         [HttpPost("GetProfiles")]
-        [ProducesResponseType(typeof(CusTomResponse<List<UserID>>), 200)]
+		[ProducesResponseType(typeof(CusTomResponse<List<UserID>>), 200)]
         public IActionResult Post([FromBody] UserInfoList userInfoList)
         {
             try
