@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,8 +30,7 @@ namespace ykcAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
+			services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "KSJ API", Version = "v1.0" });
@@ -52,7 +52,10 @@ namespace ykcAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "ykcAPI v1.0"));
             }
 
-            app.UseHttpsRedirection();
+			// 미들웨어 추가
+			app.UseMiddleware<ApiKeyMiddleware>();
+
+			app.UseHttpsRedirection();
 
             app.UseRouting();
 

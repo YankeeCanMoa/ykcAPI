@@ -12,7 +12,6 @@ namespace ykcAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-	[Authorize("ApiKey")]
 
 	public class UserController : ControllerBase
     {
@@ -68,38 +67,19 @@ namespace ykcAPI.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult Get([FromQuery] string parameter)
+        [HttpGet("api/items/{id}")]
+		[Authorize]
+		public IActionResult DeleteItem(int id, [FromQuery] string parameter, [FromBody] PutDataModel model)
         {
-            // GET 요청 처리 로직
-            return Ok($"Received GET request with parameter: {parameter}");
-        }
-
-        [HttpPut]
-        public IActionResult Put([FromBody] PutDataModel model)
-        {
-            if (model == null)
-            {
-                return BadRequest("Invalid data format.");
-            }
-
-            // PUT 요청 처리 로직
-            return Ok($"Received PUT data: {model.Data}");
-        }
-
-        [HttpDelete("api/items/{id}")]
-        public IActionResult DeleteItem(int id)
-        {
-            // ID를 사용하여 아이템 삭제 로직
-            // ...
-
-            return Ok($"Deleted item with ID: {id}");
-        }
+            return Ok($"Deleted item  with parameter: {id}{parameter}{model.Data1} {model.Data2} {model.Data3}");
+		}
     }
 
     public class PutDataModel
     {
-        public string Data { get; set; }
+        public string Data1 { get; set; }
+        public string Data2 { get; set; }
+        public string Data3 { get; set; }
     }
 
 }
