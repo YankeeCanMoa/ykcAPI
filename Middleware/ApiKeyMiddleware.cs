@@ -16,7 +16,7 @@ public class ApiKeyMiddleware
 
 	public async Task Invoke(HttpContext context)
 	{
-		var apiKey = context.Request.Headers["Authorization"].FirstOrDefault()?.Trim();
+		var apiKey = context.Request.Headers["ApiKey"].FirstOrDefault()?.Trim();
 
 		if (IsAuthorizationRequired(context) && !IsValidApiKey(apiKey))
 		{
